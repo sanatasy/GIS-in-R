@@ -5,8 +5,8 @@
 #Location: Benin dissertation folder, maps 
 ###############
 
-setwd("C:\\Users\\Sanata\\Dropbox\\01 Dissertation\\AAB_Benin\\Benin Maps")
-path <- "C:\\Users\\Sanata\\Dropbox\\tmp_BEN\\"
+#setwd("C:\\Users\\Sanata\\Dropbox\\01 Dissertation\\AAB_Benin\\Benin Maps")
+#path <- "C:\\Users\\Sanata\\Dropbox\\tmp_BEN\\"
 
 require(foreign)
 require(maptools, quietly = T)
@@ -17,7 +17,7 @@ library(gstat, quietly = T)
 
 
 #Import arrondissement shapefile
-shp <- shapefile(paste0(path, "BEN_adm3.shp"),stringsAsFactors = F)
+shp <- shapefile("BEN_adm3.shp",stringsAsFactors = F)
 projection(shp)
 shp.utm <- spTransform(shp, CRS("+proj=utm +zone=31 +datum=WGS84"))
 
@@ -26,7 +26,7 @@ shp.utm@data$CODEARRO <- as.numeric(shp.utm@data$CODEARRO)
 dat <- shp.utm@data
 
 #Import cities 
-coords <- read.csv("C:\\Users\\Sanata\\Dropbox\\01 Dissertation\\AAB_Benin\\Benin Maps\\benin_cities.csv", 
+coords <- read.csv("benin_cities.csv", 
                    sep=",", stringsAsFactors = F)
 cities <- coords[, c(3, 2)]
 rownames(cities) <- coords[, 1]
@@ -39,10 +39,10 @@ buffers.points <- SpatialPoints(buffer.cities , CRS("+proj=longlat +datum=WGS84"
 buffers.points.utm <- spTransform(buffers.points , CRS("+proj=utm +zone=31 +datum=WGS84"))
 
 #Import census 2013 data 
-load("C:\\Users\\Sanata\\Dropbox\\01 Dissertation\\AAB_Benin\\Census\\census_by_arrond2013_edited.RData")
+load("census_by_arrond2013_edited.RData")
 
 #Import voting data 
-load("C:\\Users\\Sanata\\Dropbox\\01 Dissertation\\AAB_Benin\\Benin Elections\\arrond_voteshares2015_edited.RData")
+load("arrond_voteshares2015_edited.RData")
 
 
 #get number of households by arrondissement (2013)
